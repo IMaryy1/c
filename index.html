@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>رحلة من الدرعية إلى الفضاء السيبراني</title>
+
+<style>
+body{
+margin:0;
+font-family:Tahoma;
+background:#0b0f17;
+color:#fff;
+text-align:center
+}
+
+/* ===== الشريط العلوي ===== */
+nav{
+background:#2a1a0f;
+padding:15px;
+display:flex;
+justify-content:center;
+gap:20px;
+border-bottom:2px solid #c8a96a
+}
+
+nav button{
+background:none;
+border:1px solid #c8a96a;
+color:#c8a96a;
+padding:8px 16px;
+border-radius:8px;
+cursor:pointer
+}
+nav button:hover{
+background:#c8a96a;
+color:#000
+}
+
+header{
+padding:25px;
+background:#0b0f17;
+border-bottom:1px solid #333
+}
+
+header img{height:60px}
+h1{color:#c8a96a;margin-top:10px}
+
+/* ===== الأقسام ===== */
+.section{display:none;padding:40px}
+.active{display:block}
+
+.card{
+background:#121826;
+border:1px solid #3b2a18;
+padding:25px;
+margin:auto;
+max-width:750px;
+border-radius:18px;
+box-shadow:0 0 40px #c8a96a33
+}
+
+h2{color:#c8a96a}
+
+/* ===== أزرار ===== */
+button{
+padding:12px 18px;
+margin:10px;
+border:none;
+border-radius:10px;
+background:#c8a96a;
+color:#000;
+cursor:pointer;
+font-size:15px
+}
+button:hover{background:#e6c889}
+
+.option{
+display:block;
+width:85%;
+margin:10px auto;
+background:#1b2436;
+color:#fff
+}
+
+.result{margin-top:15px;font-weight:bold}
+
+/* ===== شهادة ===== */
+.certificate{
+margin-top:25px;
+padding:30px;
+border:2px solid #c8a96a;
+border-radius:14px;
+background:#0b0f17;
+font-size:20px
+}
+
+input{
+padding:12px;
+width:80%;
+border-radius:8px;
+border:none;
+margin-top:10px
+}
+</style>
+</head>
+
+<body>
+
+<!-- الشريط -->
+<nav>
+<button onclick="go('home')">الرئيسية</button>
+<button onclick="go('story')">النشاط الأول</button>
+<button onclick="go('password')">النشاط الثاني</button>
+<button onclick="go('quiz')">النشاط الثالث</button>
+</nav>
+
+<header>
+<img src="logo.png">
+<h1>Cyber Security Club</h1>
+</header>
+
+<!-- الرئيسية -->
+<div id="home" class="section active">
+<div class="card">
+<h2>رحلة من الدرعية إلى الفضاء السيبراني</h2>
+<p>تجربة تفاعلية تربط التاريخ بالأمن السيبراني</p>
+</div>
+</div>
+
+<!-- النشاط الأول -->
+<div id="story" class="section">
+<div class="card">
+<h2>📜 النشاط الأول: السيناريو التاريخي</h2>
+
+<p>1️⃣ اعتراض رسول يحمل رسالة.</p>
+<button class="option" onclick="storyAns(true)">Man in the Middle</button>
+<button class="option" onclick="storyAns(false)">فيروس</button>
+
+<p>2️⃣ نشر خبر كاذب بين الناس.</p>
+<button class="option" onclick="storyAns(true)">هندسة اجتماعية</button>
+<button class="option" onclick="storyAns(false)">تشفير</button>
+
+<p>3️⃣ استخدام ختم القائد لإرسال أوامر.</p>
+<button class="option" onclick="storyAns(true)">انتحال هوية</button>
+<button class="option" onclick="storyAns(false)">تحديث</button>
+
+<p>4️⃣ حارس فتح البوابة من الداخل.</p>
+<button class="option" onclick="storyAns(true)">تهديد داخلي</button>
+<button class="option" onclick="storyAns(false)">فيروس</button>
+
+<div id="sr" class="result"></div>
+</div>
+</div>
+
+<!-- النشاط الثاني -->
+<div id="password" class="section">
+<div class="card">
+<h2>🔐 النشاط الثاني: قوة كلمة المرور</h2>
+
+<p>اكتب كلمة مرور:</p>
+<input id="passInput">
+
+<br>
+<button onclick="checkPass()">تحليلها</button>
+
+<div id="pr" class="result"></div>
+
+<p>مثال كلمة قوية:</p>
+<b>F0und@t!on_1727#</b>
+
+</div>
+</div>
+
+<!-- النشاط الثالث -->
+<div id="quiz" class="section">
+<div class="card">
+<h2>🧠 النشاط الثالث: أسئلة سيبرانية</h2>
+
+<p id="qText"></p>
+<div id="answers"></div>
+<div id="qr" class="result"></div>
+<button id="nextQ" style="display:none" onclick="nextQ()">التالي</button>
+
+<div id="end" style="display:none">
+<h3>🏁 انتهت رحلتك السيبرانية</h3>
+<button onclick="makeCert()">إظهار الشهادة</button>
+<div id="cert"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+function go(id){
+document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"))
+document.getElementById(id).classList.add("active")
+}
+
+/* النشاط 1 */
+function storyAns(ok){
+document.getElementById("sr").innerHTML=
+ok?"✔ صحيح":"✖ حاول مرة أخرى"
+}
+
+/* النشاط 2 */
+function checkPass(){
+let p=document.getElementById("passInput").value
+let score=0
+if(p.length>=8) score++
+if(/[A-Z]/.test(p)) score++
+if(/[a-z]/.test(p)) score++
+if(/[0-9]/.test(p)) score++
+if(/[^A-Za-z0-9]/.test(p)) score++
+
+let msg=""
+if(score<=2) msg="ضعيفة جداً"
+else if(score==3) msg="متوسطة"
+else msg="قوية وآمنة"
+
+document.getElementById("pr").innerHTML=msg
+}
+
+/* النشاط 3 */
+let qs=[
+{t:"ما هو التصيّد؟",a:["رسالة مزيفة","جدار ناري","تحديث"],c:0},
+{t:"أفضل حماية للحساب؟",a:["كلمة قوية فقط","كلمة + تحقق ثنائي","اسم طويل"],c:1},
+{t:"ما معنى التشفير؟",a:["إخفاء البيانات","حذفها","نسخها"],c:0},
+{t:"أخطر تهديد داخلي؟",a:["موظف يسرّب بيانات","بطء الجهاز","انقطاع كهرباء"],c:0},
+{t:"كلمة قوية مثال؟",a:["Saudi123","Welcome1","S#9dL@2qT"],c:2},
+{t:"التحقق الثنائي يضيف؟",a:["حماية إضافية","سرعة","حذف كلمة المرور"],c:0}
+]
+
+let qi=0
+showQ()
+
+function showQ(){
+let q=qs[qi]
+document.getElementById("qText").innerText=q.t
+let ans=""
+q.a.forEach((a,i)=>{
+ans+=`<button class="option" onclick="check(${i})">${a}</button>`
+})
+document.getElementById("answers").innerHTML=ans
+document.getElementById("nextQ").style.display="none"
+}
+
+function check(i){
+document.getElementById("qr").innerHTML=
+i===qs[qi].c?"✔ صحيح":"✖ خطأ"
+document.getElementById("nextQ").style.display="inline-block"
+}
+
+function nextQ(){
+qi++
+if(qi>=qs.length){
+document.getElementById("end").style.display="block"
+document.getElementById("qText").style.display="none"
+document.getElementById("answers").style.display="none"
+document.getElementById("nextQ").style.display="none"
+}else{
+showQ()
+}
+}
+
+function makeCert(){
+document.getElementById("cert").innerHTML=
+`<div class="certificate">
+شهادة مشاركة<br><br>
+تم إكمال تجربة الأمن السيبراني<br>
+Cyber Security Club
+</div>`
+}
+</script>
+
+</body>
+</html>
